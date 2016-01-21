@@ -1,0 +1,27 @@
+{% load i18n %}
+
+{% if form.errors %}	
+	<div class="panel panel-danger">
+		<div class="panel-heading">
+			<h3 class="panel-title">{% trans "Por favor, corrija os erros abaixo." %}</h3>
+		</div>
+		<table class="table table-hover table-responsive">
+	  		<tbody>
+				{% for error in form.non_field_errors %}
+					<tr class="active">
+		      			<td class="text-strong">{% trans "Erro" %}</td>
+		      			<td>{{ error }}</td>
+		  			</tr>
+				{% endfor %}
+	  			{% for field in form %}
+					{% if field.errors %}
+						<tr class="active">
+			      			<td class="text-strong"><a href="#{{ field.auto_id }}">{{ field.label }}</a></td>
+			      			<td>{% for error in field.errors %} {{ error|safe }} &nbsp; {% endfor %}</td>
+			  			</tr>
+					{% endif %}
+				{% endfor %}
+	  		</tbody>
+	  	</table>
+	</div>
+{% endif %}

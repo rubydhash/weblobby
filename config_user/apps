@@ -1,0 +1,12 @@
+[app] (name=fbrun)
+  [Position]	(CENTER)	{0 0}
+  [Layer]	{2}
+[end]
+[app] (name=Navigator) (class=Firefox) (role=browser)
+  [Head]	{1}
+  [Dimensions]	{94% 85%}
+  [Position]	(UPPERLEFT)	{-1% 0%}
+  [Sticky]	{no}
+  [Maximized]	{yes}
+  [Fullscreen]	{no}
+[end]

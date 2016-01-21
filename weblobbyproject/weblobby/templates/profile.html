@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block extrahead %}
+{% endblock %}
+{% block titlepage %} {% trans "Perfil" %} {% endblock %}
+
+{% block content_left %}
+
+{% if object.image_path %}
+<img class="profile-picture img-thumbnail" src="{{STATIC_URL}}img/{{ object.image_path }}"/>
+{% else %}
+<img class="profile-picture img-thumbnail" src="{{STATIC_URL}}img/nopicture.png"/>
+{% endif %}
+
+<h2>{{ object.nome }}</h2>
+
+{% endblock %}
+
+{% block content_right %}
+
+<ul id="profileTabs" class="nav nav-tabs">
+    <li class="active"><a href="#tabProfile" data-toggle="tab">{% trans "Dados" %}</a></li>
+    <li><a href="#tabRegistry" data-toggle="tab">{% trans "Registros" %}</a></li>
+</ul>
+
+<div id="profileTabContent" class="tab-content">
+    <div class="tab-pane fade in active" id="tabProfile">
+		<table class="table table-hover table-responsive">
+  			<tbody>
+                <tr>
+      				<td class="text-strong text-right">{% trans "ID" %}</td>
+      				<td class="text-strong text-left">{{ object.id }}</td>
+  				</tr>
+  				<tr>
+      				<td class="text-strong text-right">{% trans "Nome" %}</td>
+      				<td class="text-left">{{ object.nome }}</td>
+  				</tr>
+  				<tr>
+                    {% if object.passaporte %}
+      				    <td class="text-strong text-right">{% trans "Passaporte" %}</td>
+                    {% else %}
+                        <td class="text-strong text-right">{% trans "Identidade" %}</td>
+                    {% endif %}
+      				<td class="text-left">{{ object.identidade_display }}</td>
+  				</tr>
+  				<tr>
+      				<td class="text-strong text-right">{% trans "Empresa" %}</td>
+      				<td class="text-left">{{ object.empresa }}</td>
+  				</tr>
+  				{% if object.wifi %}
+  					<tr>
+	      				<td class="text-strong text-right">{% trans "Acesso Wi-Fi" %}</td>
+	      				<td class="text-left">{% trans "Sim" %}</td>
+	  				</tr>
+	  				<tr>
+	      				<td class="text-strong text-right">{% trans "CPF" %}</td>
+	      				<td class="text-left">{{ object.cpf_display }}</td>
+	  				</tr>
+	  				<tr>
+	      				<td class="text-strong text-right">{% trans "Email" %}</td>
+	      				<td class="text-left">{{ object.email }}</td>
+	  				</tr>
+	  				<tr>
+	      				<td class="text-strong text-right">{% trans "Telefone" %}</td>
+	      				<td class="text-left">{{ object.telefone_display }}</td>
+	  				</tr>
+	  				<tr>
+	      				<td class="text-strong text-right">{% trans "Telefone comercial" %}</td>
+	      				<td class="text-left">{{ object.telefone_comercial_display }}</td>
+	  				</tr>
+  				{% else %}
+  					<tr>
+	      				<td class="text-strong text-right">{% trans "Acesso Wi-Fi" %}</td>
+	      				<td class="text-left">{% trans "Não" %}</td>
+	  				</tr>
+  				{% endif %}
+                <tr>
+                    <td class="text-strong text-right">{% trans "Ultima edição" %}</td>
+                    <td class="text-left">{{ object.data_ultima_alteracao|date:'H:i d/m/Y' }}</td>
+                </tr>
+  			</tbody>
+  		</table>
+
+        {% if object.wifi %}
+            <button id="id_show_panel_button" class="btn btn-lg btn-info" onclick="show_on_panel();"><span class="glyphicon glyphicon-pencil"></span> Mostrar no painel</button>
+        {% endif %}
+  		<button class="btn btn-lg btn-warning" onclick="window.location.href='{% url 'weblobby:visitante_edit' object.pk %}'"><span class="glyphicon glyphicon-pencil"></span> Editar</button>
+		<button class="btn btn-lg btn-danger" onclick="window.location.href='{% url 'weblobby:visitante_delete' object.pk %}'"><span class="glyphicon glyphicon-trash"></span> Apagar</button>
+	</div>
+	<div class="tab-pane fade" id="tabRegistry">
+        {% include "utils/form_info.html" with form=registros_form %}
+        <form class="form-horizontal" role="form" method="post" accept-charset="utf-8">
+            {% csrf_token %}
+            {% include "utils/form_registro.html" with form=registros_form %}
+            <button type="submit" class="btn btn-lg btn-info"><span class="glyphicon glyphicon-plus-sign"></span> {% trans 'Registrar' %}</button>
+        </form>
+
+        </br>
+
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr class="success">
+      				<td class="text-strong">{% trans 'Entrada/Saída' %}</td>
+      				<td class="text-strong">{% trans 'Data e hora' %}</td>
+                    <td class="text-strong">{% trans 'Funcionário contato' %}</td>
+                    <td class="text-strong">{% trans 'Setor contato' %}</td>
+                    <td class="text-strong">{% trans 'Observação' %}</td>
+  				</tr>
+			</thead>
+  			<tbody>
+                {% for reg in registros %}
+                    <tr>
+                        {% if reg.entrada %}
+                            <td>{% trans 'Entrada' %}</td>
+                        {% else %}
+                            <td>{% trans 'Saída' %}</td>
+                        {% endif %}
+                        <td>{{ reg.dataehora|date:'H:i d/m/Y' }}</td>
+                        <td>{{ reg.funcionario_ldap|default_if_none:reg.funcionario_contato|default_if_none:'' }}</td>
+                        <td>{{ reg.setor_contato }}</td>
+                        <td>{{ reg.observacao }}</td>
+                    </tr>
+                {% endfor %}
+  			</tbody>
+  		</table>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block extramedia %}
+    {% if aba_registros %}
+<script type="text/javascript">
+    $('#profileTabs a[href="#tabRegistry"]').tab('show')
+</script>
+    {% endif %}
+
+<!-- JQuery UI -->
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery-ui-1.10.3.custom.min.js"></script>
+<link type="text/css" href="{{STATIC_URL}}css/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" media="screen"/>
+
+<!-- JQuery Timepicker -->
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery-ui-timepicker-pt-BR.js"></script>
+<link href="{{STATIC_URL}}css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css" media="screen"/>
+
+{{registros_form.media}}
+
+{% if object.wifi %}
+<script type="text/javascript">
+function show_on_panel() {
+    $.ajax({
+        url : "{% url 'weblobby:visitante_panel_profile' object.pk %}",
+        type : "POST",
+        data : {
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success : function(visitante) {
+            //alert("{% trans 'Sucesso.' %}");
+        },
+        error : function(xhr,errmsg,err) {
+            alert("{% trans 'Erro ao mostrar no painel.' %}");
+        }
+    });
+}
+</script>
+{% endif %}
+
+{% endblock %}

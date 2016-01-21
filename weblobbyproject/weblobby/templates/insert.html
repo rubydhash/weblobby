@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block extrahead %}
+{% endblock %}
+{% block titlepage %} {% trans "Cadastro" %} {% endblock %}
+
+{% block content_left %}
+
+<img id="thumbnailPreview" class="profile-picture img-thumbnail" data-src="holder.js/320x240/text:{% trans 'Foto' %}"/>
+<h2>
+<button id="takePictureBtn" type="submit" class="btn btn-lg btn-info" data-toggle="modal" data-target="#pictureModal"><span class="glyphicon glyphicon-camera"></span> Tirar foto</button>
+</h2>
+
+<!-- Modal -->
+<div class="modal fade" id="pictureModal" tabindex="-1" role="dialog" aria-labelledby="pictureModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button id="closePictureModal" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h2 class="modal-title" id="pictureModalLabel">{% trans "Tirar foto" %}</h2>
+      </div>
+      <div class="modal-body">
+      	<video id="video"></video>
+      	
+      	<!-- target for the canvas-->
+        <div id="canvasHolder"></div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelPictureModal" type="button" class="btn btn-default" data-dismiss="modal">{% trans "Fechar" %}</button>
+        <button id="storePictureModal" type="button" class="btn btn-primary">{% trans "Gravar foto" %}</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+{% endblock %}
+
+{% block content_right %}
+
+{% include "utils/form_info.html" with form=form %}
+
+<h2>{% trans "Cadastrar" %}</h2>
+	      		
+<form class="form-horizontal" role="form" method="post" accept-charset="utf-8">
+	{% csrf_token %}
+	{% include "utils/form_insert.html" with form=form %}
+	<button type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> {% trans 'Cadastrar' %}</button>
+</form>
+
+{% endblock %}
+
+{% block extramedia %}
+<script type="text/javascript" src="{{STATIC_URL}}js/capture.js"></script>
+
+<script type="text/javascript" src="{{STATIC_URL}}js/insert.js"></script>
+{% endblock %}

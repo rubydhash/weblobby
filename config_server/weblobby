@@ -1,0 +1,35 @@
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        ServerName weblobby.example.com
+        ServerAlias weblobby
+
+        DocumentRoot /var/www/
+
+        ErrorLog ${APACHE_LOG_DIR}/weblobby-error.log
+        LogLevel warn
+        CustomLog ${APACHE_LOG_DIR}/weblobby-access.log combined
+
+        WSGIScriptAlias / /usr/local/pythonenv/weblobby/weblobbyproject/weblobbyproject/wsgi.py
+
+        Alias /static/autocomplete_light /usr/local/pythonenv/weblobby/lib/python2.6/site-packages/autocomplete_light/static/autocomplete_light
+        Alias /static/admin /usr/local/pythonenv/weblobby/lib/python2.6/site-packages/django/contrib/admin/static/admin
+        Alias /static/img/visitantes /data/weblobbyimgs/visitantes
+        Alias /static /usr/local/pythonenv/weblobby/weblobbyproject/weblobby/static
+
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory /var/www/>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride None
+                Order allow,deny
+                allow from all
+        </Directory>
+        <Directory /usr/local/pythonenv/weblobby/weblobbyproject/weblobby/static>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride None
+                Order allow,deny
+                allow from all
+        </Directory>
+</VirtualHost>

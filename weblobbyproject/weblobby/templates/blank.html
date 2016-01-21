@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		{% load i18n %}
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="Neuton Martins Costa - notuenmc@gmail.com">
+
+		<title>WebLOBBY Exampla Company</title>
+
+		<!-- Bootstrap core CSS -->
+		<link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+		<!-- Bootstrap theme desativado -->
+		<!-- <link href="{{STATIC_URL}}bootstrap/css/bootstrap-theme.min.css" rel="stylesheet"> -->
+
+		<!-- Custom styles for this template -->
+		<link href="{{STATIC_URL}}css/base.css" rel="stylesheet">
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+		  <script src="{{STATIC_URL}}js/html5shiv.js"></script>
+		  <script src="{{STATIC_URL}}js/respond.min.js"></script>
+		<![endif]-->
+		<!-- Support for IE 7 -->
+		<!--[if lt IE 8]>
+			<link href="{{STATIC_URL}}bootstrap/css/bootstrap-ie7.css" rel="stylesheet">
+		<![endif]-->
+	</head>
+
+	<body>
+	    <div class="container">
+	      <div class="base">
+		      <div class="row">
+		      	<div class="col-sm-12">
+			      	<img class="profile-picture" src="{{STATIC_URL}}img/logo_example.jpg"/>
+		      	</div>
+		      </div>
+	      </div>
+	    </div><!-- /.container -->
+
+	    <!-- Bootstrap core JavaScript
+	    ================================================== -->
+	    <!-- Placed at the end of the document so the pages load faster -->
+	    <script src="{{STATIC_URL}}js/jquery-1.10.2.min.js"></script>
+	    {% include 'autocomplete_light/static.html' %}
+	    <script src="{{STATIC_URL}}js/jquery.maskedinput.min.js"></script>
+	    <script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
+	    <script src="{{STATIC_URL}}bootstrap/js/holder.js"></script>
+
+	    <!-- Additional JavaScript -->
+	    <script src="{{STATIC_URL}}js/base.js"></script>
+
+        <script>
+             function refresh() {
+                 window.location.reload(true);
+                 setTimeout(refresh, 2000);
+             }
+
+             setTimeout(refresh, 2000);
+        </script>
+	</body>
+</html>

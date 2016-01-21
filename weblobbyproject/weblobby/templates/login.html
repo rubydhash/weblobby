@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block content_center %}
+
+{% include "utils/form_info.html" with form=form %}
+
+<form class="form-signin" role="form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+    {% csrf_token %}
+    <h2 class="form-signin-heading">{% trans 'Forneça suas credenciais' %}</h2>
+    <input class="form-control" id='{{form.username.auto_id}}' maxlength="254" name="username" type="text" placeholder='{{form.username.label}}' />
+    <input class="form-control" id='{{form.password.auto_id}}' name="password" type="password" placeholder='{{form.password.label}}' />
+
+    </br>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">{% trans 'Logar' %}</button>
+    <input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+{% endblock %}

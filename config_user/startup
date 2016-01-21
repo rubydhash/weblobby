@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# fluxbox startup-script:
+#
+# Lines starting with a '#' are ignored.
+
+# Change your keymap:
+xmodmap "/home/geasi/.Xmodmap"
+
+# Applications you want to run with fluxbox.
+# MAKE SURE THAT APPS THAT KEEP RUNNING HAVE AN ''&'' AT THE END.
+#
+# unclutter -idle 2 &
+# wmnd &
+# wmsmixer -w &
+# idesk &
+#
+# Debian-local change:
+#   - fbautostart has been added with a quick hack to check to see if it
+#     exists. If it does, we'll start it up by default.
+which fbautostart > /dev/null
+if [ $? -eq 0 ]; then
+    fbautostart
+fi
+
+# Adjust monitors
+
+xrandr --output VGA-0 --mode 1280x1024
+sleep 1
+xrandr --output DVI-0 --mode 1280x1024
+sleep 1
+xrandr --output VGA-0 --left-of DVI-0 
+sleep 1
+
+firefox &
+/usr/local/bin/loop-move-monitor.sh &
+numlockx on
+
+# And last but not least we start fluxbox.
+# Because it is the last app you have to run it with ''exec'' before it.
+
+exec fluxbox
+# or if you want to keep a log:
+# exec fluxbox -log "/home/geasi/.fluxbox/log"

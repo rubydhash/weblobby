@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block extrahead %}
+{% endblock %}
+{% block titlepage %} {% trans "Perfil" %} {% endblock %}
+
+{% block content_left %}
+
+<h3>{% trans 'Últimos usuários alterados' %}</h3>
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr class="success">
+            <td class="text-strong">{% trans 'Nome' %}</td>
+            <td class="text-strong">{% trans 'Identidade ou passaporte' %}</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in last_edited_users %}
+            <tr>
+                <td><a href="{% url 'weblobby:visitante_profile' user.pk %}">{{ user.nome }}</a></td>
+                <td>{{ user.identidade_display }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+
+{% block content_right %}
+
+<h3>{% trans 'Logs' %}</h3>
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr class="success">
+            <td class="text-strong">{% trans 'Data' %}</td>
+            <td class="text-strong">{% trans 'Usuário' %}</td>
+            <td class="text-strong">{% trans 'Ação' %}</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+            <tr>
+                <td>{{ log.created|date:'H:i d/m/Y' }}</td>
+                <td>{{ log.user }}</td>
+                <td>{{ log.msg }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+
+{% block content_full %}
+
+<h3>{% trans 'Último registros de entrada ou saída' %}</h3>
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr class="success">
+            <td class="text-strong">{% trans 'Visitante' %}</td>
+            <td class="text-strong">{% trans 'Entrada/Saída' %}</td>
+            <td class="text-strong">{% trans 'Data e hora' %}</td>
+            <td class="text-strong">{% trans 'Contato' %}</td>
+            <td class="text-strong">{% trans 'Setor contato' %}</td>
+            <td class="text-strong">{% trans 'Observação' %}</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reg in last_registros %}
+            <tr>
+                <td><a href="{% url 'weblobby:visitante_profile' reg.visitante.pk %}">{{ reg.visitante.nome }}</a></td>
+                {% if reg.entrada %}
+                    <td>{% trans 'Entrada' %}</td>
+                {% else %}
+                    <td>{% trans 'Saída' %}</td>
+                {% endif %}
+                <td>{{ reg.dataehora|date:'H:i d/m/Y' }}</td>
+                <td>{{ reg.funcionario_ldap|default_if_none:reg.funcionario_contato|default_if_none:'' }}</td>
+                <td>{{ reg.setor_contato }}</td>
+                <td>{{ reg.observacao }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+
+{% block extramedia %}
+
+<script type="text/javascript">
+    if (window.name != "Painel") {
+        window.open("{% url "weblobby:panel" %}", "Painel", "fullscreen=yes, status=yes, toolbar=no, menubar=no, location=no");
+    }
+</script>
+
+{% endblock %}

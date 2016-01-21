@@ -1,0 +1,131 @@
+{% load widget_tweaks %}
+
+{% if form.nome.errors %}
+	<div class="form-group has-error">
+{% else %}
+	<div class="form-group">					
+{% endif %}
+		<label class="col-sm-2 control-label" for="{{ form.nome.auto_id }}">{{ form.nome.label }}</label>
+		<div class="col-sm-10">
+			{{ form.nome|add_class:"form-control" }}
+		</div>
+	</div>
+	
+<div class="form-inline">
+    {% if form.identidade.errors %}
+		<div class="form-group has-error col-sm-2">
+	{% else %}
+		<div class="form-group col-sm-2">
+	{% endif %}
+			<label class="control-label" for="{{ form.passaporte.auto_id }}">{{ form.passaporte.label }}</label>
+			<div>
+				{{ form.passaporte|add_class:"form-control" }}
+			</div>
+		</div>
+
+	{% if form.identidade.errors %}
+		<div class="form-group has-error col-sm-3">
+	{% else %}
+		<div class="form-group col-sm-3">
+	{% endif %}		
+			<label class="control-label" for="{{ form.identidade.auto_id }}">{{ form.identidade.label }}</label>
+			<div>
+				{{ form.identidade|add_class:"form-control" }}
+			</div>
+		</div>
+
+	{% if form.emissor.errors %}
+		<div class="form-group has-error col-sm-3">
+	{% else %}
+		<div class="form-group col-sm-3">
+	{% endif %}		
+			<label class="control-label" for="{{ form.emissor.auto_id }}">{{ form.emissor.label }}</label>
+			<div>
+				{{ form.emissor|add_class:"form-control" }}
+			</div>
+		</div>
+	
+	{% if form.uf.errors %}
+		<div class="form-group has-error col-sm-3">
+	{% else %}
+		<div class="form-group col-sm-3">
+	{% endif %}		
+			<label class="control-label" for="{{ form.uf.auto_id }}">{{ form.uf.label }}</label>
+			<div>
+				{{ form.uf|add_class:"form-control" }}
+			</div>
+		</div>
+</div>
+	
+{% if form.empresa.errors %}
+	<div class="form-group has-error col-sm-12">
+{% else %}
+	<div class="form-group col-sm-12">
+{% endif %}		
+		<label class="col-sm-2 control-label" for="{{ form.empresa.auto_id }}">{{ form.empresa.label }}</label>
+		<div class="col-sm-10">
+			{{ form.empresa|add_class:"form-control" }}
+		</div>
+	</div>
+	
+{% if form.wifi.errors %}
+	<div class="form-group has-error">
+{% else %}
+	<div class="form-group">					
+{% endif %}		
+		<label class="col-sm-2 control-label text-nobold" for="{{ form.wifi.auto_id }}">{{ form.wifi.label }}</label>
+		<div class="col-sm-10">
+			{{ form.wifi|add_class:"form-control" }}
+		</div>
+	</div>
+
+<div class="form-inline">
+{% if form.cpf.errors %}
+	<div class="form-group has-error col-sm-6">
+{% else %}
+	<div class="form-group col-sm-6">
+{% endif %}		
+		<label class="control-label text-nobold" for="{{ form.cpf.auto_id }}">{{ form.cpf.label }}</label>
+		<div>
+            {{ form.cpf|add_class:"form-control" }}
+		</div>
+	</div>
+	
+{% if form.email.errors %}
+	<div class="form-group has-error col-sm-6">
+{% else %}
+	<div class="form-group col-sm-6">
+{% endif %}		
+		<label class="control-label text-nobold" for="{{ form.email.auto_id }}">{{ form.email.label }}</label>
+		<div class="input-group">
+			<span class="input-group-addon">@</span>
+			{{ form.email|add_class:"form-control" }}
+		</div>
+	</div>
+</div>
+
+<div class="form-inline">	
+	{% if form.telefone.errors %}
+		<div class="form-group has-error col-sm-6">
+	{% else %}
+		<div class="form-group col-sm-6">					
+	{% endif %}		
+			<label class="control-label text-nobold" for="{{ form.telefone.auto_id }}">{{ form.telefone.label }}</label>
+			<div >
+				{{ form.telefone|add_class:"form-control" }}
+			</div>
+		</div>
+		
+	{% if form.telefone_comercial.errors %}
+		<div class="form-group has-error col-sm-6">
+	{% else %}
+		<div class="form-group col-sm-6">					
+	{% endif %}		
+			<label class="control-label text-nobold" for="{{ form.telefone_comercial.auto_id }}">{{ form.telefone_comercial.label }}</label>
+			<div>
+				{{ form.telefone_comercial|add_class:"form-control" }}
+			</div>
+		</div>	
+</div>
+
+{{ form.image_path }}

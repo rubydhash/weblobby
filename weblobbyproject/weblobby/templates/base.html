@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		{% load i18n %}
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="Neuton Martins Costa - notuenmc@gmail.com">
+		
+		<title>WebLOBBY {% block titlepage %}{% endblock %}</title>
+		
+		<!-- Bootstrap core CSS -->
+		<link href="{{STATIC_URL}}bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		
+		<!-- Bootstrap theme desativado -->
+		<!-- <link href="{{STATIC_URL}}bootstrap/css/bootstrap-theme.min.css" rel="stylesheet"> -->
+		
+		<!-- Custom styles for this template -->
+		<link href="{{STATIC_URL}}css/base.css" rel="stylesheet">
+		
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+		  <script src="{{STATIC_URL}}js/html5shiv.js"></script>
+		  <script src="{{STATIC_URL}}js/respond.min.js"></script>
+		<![endif]-->
+		<!-- Support for IE 7 -->
+		<!--[if lt IE 8]>
+			<link href="{{STATIC_URL}}bootstrap/css/bootstrap-ie7.css" rel="stylesheet">
+		<![endif]-->
+		
+		{% block extrahead %} {% endblock %}
+	</head>
+
+	<body>
+		{% include "menu.html" %}  
+	
+	    <div class="container">
+	      <div class="base">
+		      <div class="row myrow">
+		      	<div class="col-sm-4 mycol">
+			      	{% block content_left %}
+	                {% endblock %}
+		      	</div>
+		      	<div class="col-sm-8 mycol">
+		      		{% block content_right %}
+	                {% endblock %}
+		      	</div>
+		      </div>
+              <div class="row myrow">
+		      	<div class="col-sm-12 mycol">
+			      	{% block content_full %}
+	                {% endblock %}
+		      	</div>
+		      </div>
+              <div class="row myrow">
+                <div class="col-sm-4 mycol">
+		      	</div>
+                <div class="col-sm-4 mycol">
+                    {% block content_center %}
+	                {% endblock %}
+		      	</div>
+                <div class="col-sm-4 mycol">
+		      	</div>
+		      </div>
+	      </div>	
+	    </div><!-- /.container -->
+	
+	    <!-- Bootstrap core JavaScript
+	    ================================================== -->
+	    <!-- Placed at the end of the document so the pages load faster -->
+        <script src="{{STATIC_URL}}js/jquery-1.10.2.min.js"></script>
+        {% include 'autocomplete_light/static.html' %}
+        <script src="{{STATIC_URL}}js/jquery.maskedinput.min.js"></script>
+        <script src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
+        <script src="{{STATIC_URL}}bootstrap/js/holder.js"></script>
+        <script src="{{STATIC_URL}}js/sprintf.min.js"></script>
+
+	    <!-- Additional JavaScript -->
+	    <script src="{{STATIC_URL}}js/base.js"></script>
+
+		<script type="text/javascript">
+            // Joga para a página de profile do usuário selecionado
+            $('#id_search').bind('selectChoice', function(e, choice, autocomplete) {
+                var profile_url = "{% url "weblobby:visitante_profile" 0 %}";
+                window.location.href = profile_url.replace('/0/', '/'.concat(choice.data().value).concat('/'));
+            });
+		</script>
+	    
+	    {% block extramedia %} {% endblock %}
+	</body>
+</html>
